@@ -10,6 +10,7 @@ std::string Menu::choose()
 		std::cout << "Choose action which you want to perform:\n";
 		std::cout << "1 - encode\n";
 		std::cout << "2 - decode\n";
+		std::cout << "q - quit\n";
 
 		std::cin >> action;
 
@@ -20,6 +21,10 @@ std::string Menu::choose()
 		else if (action == "2")
 		{
 			return "decode";
+		}
+		else if (action == "q")
+		{
+			std::exit(0);
 		}
 		else
 		{
