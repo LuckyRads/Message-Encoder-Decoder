@@ -4,6 +4,7 @@
 #include <string>
 #include "Base64.h"
 #include "Menu.h"
+#include "Coder.h"
 
 int main()
 {

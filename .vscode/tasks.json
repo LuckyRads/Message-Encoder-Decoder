@@ -13,6 +13,7 @@
                 "${workspaceFolder}/Headers",
                 "${workspaceFolder}/Source/Menu.cpp",
                 "${workspaceFolder}/Source/Base64.cpp",
+                "${workspaceFolder}/Source/Coder.cpp"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
