@@ -8,7 +8,7 @@
             "name": "g++ - Build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/Build/${fileBasenameNoExtension}-linux",
+            "program": "${workspaceFolder}/Build/Message-Encoder-Decoder-linux",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
