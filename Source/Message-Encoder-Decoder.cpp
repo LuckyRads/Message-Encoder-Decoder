@@ -8,26 +8,28 @@
 
 int main()
 {
-	std::string choice = Menu::choose();
-	std::string text = Menu::enterText(choice);
 	std::string convertedText = "";
 
-	if (choice == "encode")
+	while (true)
 	{
-		convertedText = Base64::encode(text);
-	}
-	else if (choice == "decode")
-	{
-		convertedText = Base64::decode(text);
-	}
-	else
-	{
-		std::cout << "Unknown action!\n";
-	}
+		std::string choice = Menu::choose();
+		std::string text = Menu::enterText(choice);
 
-	std::cout << choice << "d text:\n" << convertedText << std::endl;
+		if (choice == "encode")
+		{
+			convertedText = Coder::encode(text);
+		}
+		else if (choice == "decode")
+		{
+			convertedText = Coder::decode(text);
+		}
+		else
+		{
+			std::cout << "Unknown action!\n";
+		}
 
-	std::cout << "Press q and enter to close the program...\n";
-	std::cin >> text;
+		std::cout << choice << "d text:\n" << convertedText << std::endl;
+	}
+	
 	return 0;
 }
