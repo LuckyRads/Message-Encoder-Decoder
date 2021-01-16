@@ -24,7 +24,7 @@ std::string Menu::choose()
 		{
 			return "decode";
 		}
-		else if (action == "q")
+		else if (action == "q" || action == "Q")
 		{
 			std::exit(0);
 		}
