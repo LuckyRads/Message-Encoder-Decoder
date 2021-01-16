@@ -5,7 +5,7 @@ std::string Coder::encode(const std::string text)
 {
     std::string encodedText;
 
-    for (char character : text)
+    for (unsigned char character : text)
     {
         if (character % 2)
         {
@@ -24,7 +24,7 @@ std::string Coder::decode(const std::string text)
 {
     std::string decodedText;
 
-    for (char character : text)
+    for (unsigned char character : text)
     {
         if (character % 2)
         {
