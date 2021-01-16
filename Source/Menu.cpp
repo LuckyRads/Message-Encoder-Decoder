@@ -7,10 +7,12 @@ std::string Menu::choose()
 	{
 		std::string action;
 
+		std::cout << "------------------Menu------------------\n";
 		std::cout << "Choose action which you want to perform:\n";
 		std::cout << "1 - encode\n";
 		std::cout << "2 - decode\n";
 		std::cout << "q - quit\n";
+		std::cout << "----------------------------------------\n";
 
 		std::cin >> action;
 
