@@ -4,17 +4,23 @@
 std::string Coder::encode(const std::string text)
 {
     std::string encodedText;
-    // TODO: Create an encoding algorithm
+
     for (char character : text)
     {
-        std::cout << character << std::endl;
+        encodedText.push_back(character + 1);
     }
+
     return encodedText;
 }
 
 std::string Coder::decode(const std::string text)
 {
     std::string decodedText;
-    // TODO: Create an encoding algorithm
+
+    for (char character : text)
+    {
+        decodedText.push_back(character - 1);
+    }    
+
     return decodedText;
 }
