@@ -7,7 +7,14 @@ std::string Coder::encode(const std::string text)
 
     for (char character : text)
     {
-        encodedText.push_back(character + 1);
+        if (character % 2)
+        {
+            encodedText.push_back(character + 1);
+        }
+        else
+        {
+            encodedText.push_back(character - 1);
+        }
     }
 
     return encodedText;
@@ -19,7 +26,14 @@ std::string Coder::decode(const std::string text)
 
     for (char character : text)
     {
-        decodedText.push_back(character - 1);
+        if (character % 2)
+        {
+            decodedText.push_back(character + 1);
+        }
+        else
+        {
+            decodedText.push_back(character - 1);
+        }
     }    
 
     return decodedText;
