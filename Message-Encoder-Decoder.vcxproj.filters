@@ -20,6 +20,9 @@
     <ClCompile Include="Source\Message-Encoder-Decoder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Coder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Base64.h">
@@ -29,6 +32,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Coder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

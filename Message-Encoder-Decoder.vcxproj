@@ -150,11 +150,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Base64.cpp" />
+    <ClCompile Include="Source\Coder.cpp" />
     <ClCompile Include="Source\Menu.cpp" />
     <ClCompile Include="Source\Message-Encoder-Decoder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Base64.h" />
+    <ClInclude Include="Headers\Coder.h" />
     <ClInclude Include="Headers\Menu.h" />
     <ClInclude Include="Headers\resource.h" />
   </ItemGroup>
