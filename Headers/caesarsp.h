@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CAESARSP_H
+#define CAESARSP_H
 
 #include <string>
 
@@ -8,3 +9,5 @@ public:
     static std::string encode(const std::string text);
     static std::string decode(const std::string text);
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BASE64_H
+#define BASE64_H
 
 #include <string>
 
@@ -8,3 +9,5 @@ public:
 	static std::string encode(const std::string& in);
 	static std::string decode(const std::string& in);
 };
+
+#endif
