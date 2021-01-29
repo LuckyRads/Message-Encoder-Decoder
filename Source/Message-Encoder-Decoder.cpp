@@ -2,9 +2,8 @@
 
 #include <iostream>
 #include <string>
-#include "base64.h"
 #include "menu.h"
-#include "caesarsp.h"
+#include "coder.h"
 
 int main()
 {

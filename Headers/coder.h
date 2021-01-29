@@ -1,9 +1,9 @@
-#ifndef CAESARSP_H
-#define CAESARSP_H
+#ifndef CODER_H
+#define CODER_H
 
 #include <string>
 
-class CaesarsP
+class Coder
 {
 public:
     static std::string encode(const std::string text);
