@@ -42,6 +42,6 @@ std::string Menu::enterText(std::string action)
 {
 	std::string text;
 	std::cout << "Enter text which you'd like to " << action << ":\n";
-	std::cin >> text;
+	std::getline(std::cin >> std::ws, text);
 	return text;
 }
