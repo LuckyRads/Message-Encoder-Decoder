@@ -2,9 +2,9 @@
 
 #include <iostream>
 #include <string>
-#include "Base64.h"
-#include "Menu.h"
-#include "Coder.h"
+#include "base64.h"
+#include "menu.h"
+#include "caesarsp.h"
 
 int main()
 {
@@ -28,8 +28,9 @@ int main()
 			std::cout << "Unknown action!\n";
 		}
 
-		std::cout << choice << "d text:\n" << convertedText << std::endl;
+		std::cout << choice << "d text:\n"
+				  << convertedText << std::endl;
 	}
-	
+
 	return 0;
 }

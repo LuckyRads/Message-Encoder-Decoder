@@ -1,4 +1,4 @@
-#include "Coder.h"
+#include "caesarsp.h"
 #include <iostream>
 
 std::string Coder::encode(const std::string text)
