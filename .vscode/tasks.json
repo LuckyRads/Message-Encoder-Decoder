@@ -6,13 +6,11 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
-                "${file}",
+                "${workspaceFolder}/Source/*.cpp",
                 "-o",
-                "${workspaceFolder}/Build/${fileBasenameNoExtension}-linux",
+                "${workspaceFolder}/Build/Message-Encoder-Decoder-linux",
                 "-I",
-                "${workspaceFolder}/Headers",
-                "${workspaceFolder}/Source/Menu.cpp",
-                "${workspaceFolder}/Source/Base64.cpp",
+                "${workspaceFolder}/Headers"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
