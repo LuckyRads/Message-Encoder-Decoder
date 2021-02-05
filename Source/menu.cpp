@@ -38,7 +38,7 @@ std::string Menu::choose()
 	}
 }
 
-std::string Menu::enterText(std::string action)
+std::string Menu::enterText(std::string &action)
 {
 	std::string text;
 	std::cout << "Enter text which you'd like to " << action << ":\n";
