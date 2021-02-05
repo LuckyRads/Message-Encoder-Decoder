@@ -38,6 +38,7 @@ std::string Menu::chooseAction()
 		}
 		else if (action == "q" || action == "Q")
 		{
+			std::cout << "Exiting...\n";
 			std::exit(0);
 		}
 		else
