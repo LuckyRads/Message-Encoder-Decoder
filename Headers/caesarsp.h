@@ -3,6 +3,7 @@
 
 #include <string>
 
+/// Modified Caesar's cypher class for encoding and decoding text
 class CaesarsP
 {
 public:

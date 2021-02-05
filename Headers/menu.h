@@ -3,6 +3,8 @@
 
 #include <string>
 
+/// This class is responsible for handling user input choices
+/// and showing the menu to the user
 class Menu
 {
 private:
