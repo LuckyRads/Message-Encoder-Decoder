@@ -11,24 +11,23 @@ int main()
 
 	while (true)
 	{
-		std::string choice = Menu::choose();
-		std::string text = Menu::enterText(choice);
+		std::string action = Menu::chooseAction();
+		std::string inputText = Menu::enterText(action);
 
-		if (choice == "encode")
+		if (action == "encode")
 		{
-			convertedText = Coder::encode(text);
+			convertedText = Coder::encode(inputText);
 		}
-		else if (choice == "decode")
+		else if (action == "decode")
 		{
-			convertedText = Coder::decode(text);
+			convertedText = Coder::decode(inputText);
 		}
 		else
 		{
 			std::cout << "Unknown action!\n";
 		}
 
-		std::cout << choice << "d text:\n"
-				  << convertedText << std::endl;
+		Menu::showConvertedText(action, convertedText);
 	}
 
 	return 0;

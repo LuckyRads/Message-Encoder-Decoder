@@ -5,9 +5,12 @@
 
 class Menu
 {
-public:
+private:
 	static void showMenu();
-	static std::string choose();
+
+public:
+	static void showConvertedText(std::string &action, std::string &text);
+	static std::string chooseAction();
 	static std::string enterText(std::string &action);
 };
 
