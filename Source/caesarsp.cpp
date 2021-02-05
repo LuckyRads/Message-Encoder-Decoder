@@ -1,7 +1,7 @@
 #include "caesarsp.h"
 #include <iostream>
 
-std::string CaesarsP::encode(const std::string text)
+std::string CaesarsP::encode(const std::string &text)
 {
     std::string encodedText;
 
@@ -20,7 +20,7 @@ std::string CaesarsP::encode(const std::string text)
     return encodedText;
 }
 
-std::string CaesarsP::decode(const std::string text)
+std::string CaesarsP::decode(const std::string &text)
 {
     std::string decodedText;
 
