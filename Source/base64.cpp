@@ -3,7 +3,6 @@
 
 std::string Base64::encode(const std::string &text)
 {
-
 	std::string out;
 
 	int val = 0, valb = -6;
@@ -26,7 +25,6 @@ std::string Base64::encode(const std::string &text)
 
 std::string Base64::decode(const std::string &text)
 {
-
 	std::string out;
 
 	std::vector<int> T(256, -1);
