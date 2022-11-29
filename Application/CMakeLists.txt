@@ -2,9 +2,6 @@
 include_directories(${MessageEncoderDecoder_SOURCE_DIR}/Application/Include)
 include_directories(${MessageEncoderDecoder_SOURCE_DIR}/Encoders/Include)
 
-# Link all library source files.
-link_directories(${MessageEncoderDecoder_SOURCE_DIR}/Encoders/Source)
-
 # Set source files for the main module.
 file(GLOB SRC_FILES Source/*.cpp)
 
