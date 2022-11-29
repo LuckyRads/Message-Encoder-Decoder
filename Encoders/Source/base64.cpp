@@ -6,7 +6,7 @@ std::string Base64::encode(const std::string &text)
 	std::string out;
 
 	int val = 0, valb = -6;
-	for (unsigned char c : text)
+	for (auto c : text)
 	{
 		val = (val << 8) + c;
 		valb += 8;
