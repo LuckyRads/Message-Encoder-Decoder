@@ -1,0 +1,77 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.0.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id 'org.asciidoctor.convert' version '1.5.8'
+}
+
+group = 'com.lucky'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('snippetsDir', file("build/generated-snippets"))
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-jooq'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation 'org.springframework.security:spring-security-test'
+}
+
+tasks.named('test') {
+	outputs.dir snippetsDir
+	useJUnitPlatform()
+}
+
+tasks.named('asciidoctor') {
+	inputs.dir snippetsDir
+	dependsOn test
+}
+
+jooqGenerator {
+	jooqVersion = "3.13.1"
+	configuration("primary", project.sourceSets.getByName("main")) {
+		databaseSources = migrationDirs
+
+		configuration = jooqCodegenConfiguration {
+			jdbc {
+				username = "root"
+				password = "root"
+				driver = "org.mariadb.jdbc.Driver"
+				url = "jdbc:mariadb://localhost:3306/message-encoder-decoder"
+			}
+
+			generator {
+				target {
+					packageName = "org.lucky.messageencoderdecoder.jooq"
+					directory = "${project.buildDir}/generated/jooq/primary"
+				}
+			}
+
+			database {
+				name = "org.jooq.meta.mariadb.MariaDBDatabase"
+				inputSchema = "PUBLIC"
+			}
+		}
+	}
+}
