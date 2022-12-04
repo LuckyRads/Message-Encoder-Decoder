@@ -68,7 +68,9 @@
       "random": "cpp",
       "string_view": "cpp",
       "fstream": "cpp",
-      "sstream": "cpp"
+      "sstream": "cpp",
+      "stdint.h": "c",
+      "caesarsp.h": "c"
     },
     "java.dependency.packagePresentation": "hierarchical",
     "java.configuration.updateBuildConfiguration": "interactive"
