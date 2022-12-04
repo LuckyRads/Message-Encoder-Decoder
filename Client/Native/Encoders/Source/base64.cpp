@@ -1,4 +1,4 @@
-#include "base64.h"
+#include "base64.hpp"
 #include <vector>
 
 std::string Base64::encode(const std::string &text)

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include "menu.h"
-#include "coder.h"
+#include "coder.hpp"
 
 int main()
 {
