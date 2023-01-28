@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cstdio>
 
-void Menu::showMenu()
+void Menu::ShowMenu()
 {
 	std::cout << "------------------Menu------------------\n";
 	std::cout << "1 - encode\n";
@@ -11,18 +11,18 @@ void Menu::showMenu()
 	std::cout << "----------------------------------------\n";
 }
 
-void Menu::showConvertedText(std::string &action, std::string &text)
+void Menu::ShowConvertedText(std::string &action, std::string &text)
 {
 	std::printf("--------------%sd text--------------\n", action.c_str());
 	std::cout << text << std::endl;
 	std::cout << "----------------------------------------\n";
 }
 
-std::string Menu::chooseAction()
+std::string Menu::ChooseAction()
 {
 	while (true)
 	{
-		showMenu();
+		ShowMenu();
 		std::cout << "Your action: ";
 
 		std::string action;
@@ -48,7 +48,7 @@ std::string Menu::chooseAction()
 	}
 }
 
-std::string Menu::enterText(std::string &action)
+std::string Menu::EnterText(std::string &action)
 {
 	std::string text;
 	std::printf("Enter text which you'd like to %s:\n", action.c_str());

@@ -11,8 +11,8 @@ int main()
 
 	while (true)
 	{
-		std::string action = Menu::chooseAction();
-		std::string inputText = Menu::enterText(action);
+		std::string action = Menu::ChooseAction();
+		std::string inputText = Menu::EnterText(action);
 
 		if (action == "encode")
 		{
@@ -27,7 +27,7 @@ int main()
 			std::cout << "Unknown action!\n";
 		}
 
-		Menu::showConvertedText(action, convertedText);
+		Menu::ShowConvertedText(action, convertedText);
 	}
 
 	return 0;

@@ -1,7 +1,7 @@
 #include "base64.hpp"
 #include <vector>
 
-std::string Base64::encode(const std::string &text)
+std::string Base64::Encode(const std::string &text)
 {
 	std::string out;
 
@@ -23,7 +23,7 @@ std::string Base64::encode(const std::string &text)
 	return out;
 }
 
-std::string Base64::decode(const std::string &text)
+std::string Base64::Decode(const std::string &text)
 {
 	std::string out;
 

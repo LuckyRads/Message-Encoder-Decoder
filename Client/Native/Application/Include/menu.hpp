@@ -8,12 +8,12 @@
 class Menu
 {
 private:
-	static void showMenu();
+	static void ShowMenu();
 
 public:
-	static void showConvertedText(std::string &action, std::string &text);
-	static std::string chooseAction();
-	static std::string enterText(std::string &action);
+	static void ShowConvertedText(std::string &action, std::string &text);
+	static std::string ChooseAction();
+	static std::string EnterText(std::string &action);
 };
 
 #endif
