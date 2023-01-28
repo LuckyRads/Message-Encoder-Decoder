@@ -1,5 +1,5 @@
-#ifndef CODER_H
-#define CODER_H
+#ifndef CODER_HPP
+#define CODER_HPP
 
 #include <string>
 

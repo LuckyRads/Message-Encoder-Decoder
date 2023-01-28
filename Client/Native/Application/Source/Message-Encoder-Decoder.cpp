@@ -1,9 +1,9 @@
 // Message-Encoder-Decoder.cpp : This file contains the 'main' function. Program execution begins and ends there.
 
+#include "menu.hpp"
+#include "coder.hpp"
 #include <iostream>
 #include <string>
-#include "menu.h"
-#include "coder.hpp"
 
 int main()
 {
