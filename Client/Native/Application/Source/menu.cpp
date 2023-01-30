@@ -1,6 +1,21 @@
 #include "menu.hpp"
+#include "types.hpp"
 #include <iostream>
 #include <cstdio>
+
+void ShowIOMenu()
+{
+	std::cout << "1 - file\n";
+	std::cout << "2 - console\n";
+}
+
+void Menu::ShowMenu(void (*displayMenu)())
+{
+	std::cout << "------------------Menu------------------\n";
+	displayMenu();
+	std::cout << "q - quit\n";
+	std::cout << "----------------------------------------\n";
+}
 
 void Menu::ShowMenu()
 {
@@ -16,6 +31,27 @@ void Menu::ShowConvertedText(std::string &action, std::string &text)
 	std::printf("--------------%sd text--------------\n", action.c_str());
 	std::cout << text << std::endl;
 	std::cout << "----------------------------------------\n";
+}
+
+IOType Menu::ChooseIO()
+{
+	IOType chosenIO = IOType.FILE;
+	while (true)
+	{
+		Menu::ShowMenu(&ShowIOMenu);
+		std::cout << "IO type:";
+		std::string choice;
+		std::cin >> choice;
+		if (choice == "1")
+		{
+			return 1;
+		}
+		else if (choice == "2")
+		{
+			return IOType.CONSOLE;
+		}
+	}
+	throw std::invalid_argument("Invalid argument");
 }
 
 std::string Menu::ChooseAction()

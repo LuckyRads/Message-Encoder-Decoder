@@ -13,4 +13,5 @@ public:
     StateManager();
     ~StateManager();
     void PushState(State state);
+    void UpdateState();
 };
