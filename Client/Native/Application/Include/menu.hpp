@@ -10,7 +10,7 @@ class Menu
 {
 private:
 	static void ShowMenu();
-	static void ShowMenu(void (*displayMenu)());
+	static void ShowMenu(void (*displayMenu)(), const std::string menuText);
 
 public:
 	static void ShowConvertedText(std::string &action, std::string &text);

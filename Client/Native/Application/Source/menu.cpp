@@ -1,17 +1,19 @@
 #include "menu.hpp"
 #include "types.hpp"
+#include "enum.hpp"
 #include <iostream>
 #include <cstdio>
 
 void ShowIOMenu()
 {
-	std::cout << "1 - file\n";
-	std::cout << "2 - console\n";
+	// printf("%u - %s\n", as_integer(IOType::FILE), IO_MAP.at(as_integer(IOType::FILE)).c_str());
+	// printf("%u - %s\n", as_integer(IOType::CONSOLE), IO_MAP.at(as_integer(IOType::CONSOLE)).c_str());
+	printf_s("IOOO 1");
 }
 
-void Menu::ShowMenu(void (*displayMenu)())
+void Menu::ShowMenu(void (*displayMenu)(), const std::string menuText)
 {
-	std::cout << "------------------Menu------------------\n";
+	std::cout << "------------------" + menuText + "------------------\n";
 	displayMenu();
 	std::cout << "q - quit\n";
 	std::cout << "----------------------------------------\n";
@@ -35,23 +37,23 @@ void Menu::ShowConvertedText(std::string &action, std::string &text)
 
 IOType Menu::ChooseIO()
 {
-	IOType chosenIO = IOType.FILE;
+	IOType chosenIO = IOType::FILE;
 	while (true)
 	{
-		Menu::ShowMenu(&ShowIOMenu);
+		Menu::ShowMenu(&ShowIOMenu, "IO selection");
 		std::cout << "IO type:";
 		std::string choice;
 		std::cin >> choice;
 		if (choice == "1")
 		{
-			return 1;
+			return IOType::FILE;
 		}
 		else if (choice == "2")
 		{
-			return IOType.CONSOLE;
+			return IOType::CONSOLE;
 		}
 	}
-	throw std::invalid_argument("Invalid argument");
+	throw std::invalid_argument("Invalid IO argument");
 }
 
 std::string Menu::ChooseAction()

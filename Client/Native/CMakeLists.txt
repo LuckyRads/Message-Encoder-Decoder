@@ -5,6 +5,7 @@ project(MessageEncoderDecoder VERSION 0.1.0)
 add_subdirectory(Application)
 # Add library modules.
 add_subdirectory(Encoders)
+add_subdirectory(Common)
 
 # Set executable and library output path
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/Bin)
