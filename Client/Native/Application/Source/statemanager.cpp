@@ -15,9 +15,26 @@ IOManager *GetNewIOManager(IOType ioType)
         throw std::invalid_argument("Invalid IO type provided.");
 }
 
+/// @param action
+/// @return bool that indicates if the action was handled and the execution should be stopped
+bool StateManager::HandleBaseActionIfRequested(const BaseAction &action)
+{
+    if (action == BaseAction::QUIT)
+    {
+        printf("Exiting...\n");
+        std::exit(0);
+    }
+    else if (action == BaseAction::BACK)
+    {
+        this->PopState();
+        return true;
+    }
+    return false;
+}
+
 StateManager::StateManager()
 {
-    this->ioManager = nullptr;
+    this->pIoManager = nullptr;
     this->PushState(State::IO_SELECTION);
 }
 
@@ -31,21 +48,36 @@ void StateManager::PushState(State state)
     this->currentState = state;
 }
 
+void StateManager::PopState()
+{
+    if (this->states.size() <= 1)
+        return;
+
+    this->states.pop_back();
+    this->currentState = this->states.back();
+}
+
 void StateManager::UpdateState()
 {
     if (this->currentState == State::IO_SELECTION)
     {
         IOType chosenIO = Menu::ChooseIO();
 
-        if (this->ioManager != nullptr)
-            delete this->ioManager;
-        this->ioManager = GetNewIOManager(chosenIO);
+        if (this->HandleBaseActionIfRequested((BaseAction)chosenIO))
+            return;
+
+        if (this->pIoManager != nullptr)
+            delete this->pIoManager;
+        this->pIoManager = GetNewIOManager(chosenIO);
 
         this->PushState(State::ACTION_SELECTION);
     }
     else if (this->currentState == State::ACTION_SELECTION)
     {
         ActionType chosenAction = Menu::ChooseAction();
+
+        if (this->HandleBaseActionIfRequested((BaseAction)chosenAction))
+            return;
 
         // TODO: Use enum as integer/name
         std::string message;
@@ -57,7 +89,7 @@ void StateManager::UpdateState()
         {
             message = "decode";
         }
-        std::string inputText = this->ioManager->Read(message);
+        std::string inputText = this->pIoManager->Read(message);
 
         std::string outputText;
         if (chosenAction == ActionType::ENCODE)
@@ -68,7 +100,7 @@ void StateManager::UpdateState()
         {
             outputText = Coder::Decode(inputText);
         }
-        this->ioManager->Write(message, outputText);
+        this->pIoManager->Write(message, outputText);
     }
     else
     {

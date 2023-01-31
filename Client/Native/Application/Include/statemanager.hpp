@@ -10,11 +10,13 @@ class StateManager
 private:
     State currentState;
     std::vector<State> states;
-    IOManager *ioManager;
+    IOManager *pIoManager;
 
 public:
     StateManager();
     ~StateManager();
     void PushState(State state);
+    void PopState();
     void UpdateState();
+    bool HandleBaseActionIfRequested(const BaseAction &action);
 };

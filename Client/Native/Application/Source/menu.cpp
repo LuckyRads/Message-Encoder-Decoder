@@ -4,13 +4,24 @@
 #include <iostream>
 #include <cstdio>
 
-void HandleQuitIfRequested(const std::string &choice)
+BaseAction GetBaseAction(const std::string &choice)
 {
 	if (choice == "q" || choice == "Q")
 	{
-		printf_s("Exiting...\n");
-		std::exit(0);
+		return BaseAction::QUIT;
 	}
+	else if (choice == "b" || choice == "B")
+	{
+		return BaseAction::BACK;
+	}
+	throw std::invalid_argument("Invalid choice provided.");
+}
+
+bool WasBaseActionRequested(const std::string &choice)
+{
+	if (choice == "q" || choice == "Q" || choice == "b" || choice == "B")
+		return true;
+	return false;
 }
 
 void ShowIOMenu()
@@ -44,8 +55,11 @@ IOType Menu::ChooseIO()
 		std::string choice;
 		std::cin >> choice;
 
-		HandleQuitIfRequested(choice);
-		if (choice == "1")
+		if (WasBaseActionRequested(choice))
+		{
+			return (IOType)GetBaseAction(choice);
+		}
+		else if (choice == "1")
 		{
 			return IOType::FILE;
 		}
@@ -70,8 +84,11 @@ ActionType Menu::ChooseAction()
 		std::string action;
 		std::cin >> action;
 
-		HandleQuitIfRequested(action);
-		if (action == "1")
+		if (WasBaseActionRequested(action))
+		{
+			return (ActionType)GetBaseAction(action);
+		}
+		else if (action == "1")
 		{
 			return ActionType::ENCODE;
 		}
