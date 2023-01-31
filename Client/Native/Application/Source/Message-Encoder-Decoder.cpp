@@ -9,29 +9,10 @@
 int main()
 {
 	StateManager stateManager;
-	stateManager.UpdateState();
-	std::string convertedText = "";
-
-	// while (true)
-	// {
-	// 	std::string action = Menu::ChooseAction();
-	// 	std::string inputText = Menu::EnterText(action);
-
-	// 	if (action == "encode")
-	// 	{
-	// 		convertedText = Coder::encode(inputText);
-	// 	}
-	// 	else if (action == "decode")
-	// 	{
-	// 		convertedText = Coder::decode(inputText);
-	// 	}
-	// 	else
-	// 	{
-	// 		std::cout << "Unknown action!\n";
-	// 	}
-
-	// 	Menu::ShowConvertedText(action, convertedText);
-	// }
+	while (true)
+	{
+		stateManager.UpdateState();
+	}
 
 	return 0;
 }

@@ -17,14 +17,14 @@ void ShowIOMenu()
 {
 	// printf("%u - %s\n", as_integer(IOType::FILE), IO_MAP.at(as_integer(IOType::FILE)).c_str());
 	// printf("%u - %s\n", as_integer(IOType::CONSOLE), IO_MAP.at(as_integer(IOType::CONSOLE)).c_str());
-	printf_s("IO MEnu");
+	printf_s("IO MEnu\n");
 }
 
 void ShowActionMenu()
 {
 	// printf("%u - %s\n", as_integer(ActionType::ENCODE), ACTION_MAP.at(as_integer(ActionType::ENCODE)).c_str());
 	// printf("%u - %s\n", as_integer(ActionType::DECODE), ACTION_MAP.at(as_integer(ActionType::DECODE)).c_str());
-	printf_s("action menu");
+	printf_s("action menu\n");
 }
 
 void Menu::ShowMenu(void (*displayMenu)(), const std::string menuText)
@@ -37,7 +37,6 @@ void Menu::ShowMenu(void (*displayMenu)(), const std::string menuText)
 
 IOType Menu::ChooseIO()
 {
-	IOType chosenIO = IOType::FILE;
 	while (true)
 	{
 		Menu::ShowMenu(&ShowIOMenu, "IO selection");
