@@ -10,12 +10,12 @@ extern "C"
 }
 #endif
 
-std::string Coder::encode(const std::string &text)
+std::string Coder::Encode(const std::string &text)
 {
     return Base64::Encode(caesarsp_encode(text.c_str(), sizeof(text)));
 }
 
-std::string Coder::decode(const std::string &text)
+std::string Coder::Decode(const std::string &text)
 {
     return caesarsp_decode(Base64::Decode(text).c_str(), sizeof(text));
 }

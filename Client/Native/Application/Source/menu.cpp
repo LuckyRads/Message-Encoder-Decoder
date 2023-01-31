@@ -4,11 +4,27 @@
 #include <iostream>
 #include <cstdio>
 
+void HandleQuitIfRequested(const std::string &choice)
+{
+	if (choice == "q" || choice == "Q")
+	{
+		printf_s("Exiting...\n");
+		std::exit(0);
+	}
+}
+
 void ShowIOMenu()
 {
 	// printf("%u - %s\n", as_integer(IOType::FILE), IO_MAP.at(as_integer(IOType::FILE)).c_str());
 	// printf("%u - %s\n", as_integer(IOType::CONSOLE), IO_MAP.at(as_integer(IOType::CONSOLE)).c_str());
-	printf_s("IOOO 1");
+	printf_s("IO MEnu");
+}
+
+void ShowActionMenu()
+{
+	// printf("%u - %s\n", as_integer(ActionType::ENCODE), ACTION_MAP.at(as_integer(ActionType::ENCODE)).c_str());
+	// printf("%u - %s\n", as_integer(ActionType::DECODE), ACTION_MAP.at(as_integer(ActionType::DECODE)).c_str());
+	printf_s("action menu");
 }
 
 void Menu::ShowMenu(void (*displayMenu)(), const std::string menuText)
@@ -19,31 +35,17 @@ void Menu::ShowMenu(void (*displayMenu)(), const std::string menuText)
 	std::cout << "----------------------------------------\n";
 }
 
-void Menu::ShowMenu()
-{
-	std::cout << "------------------Menu------------------\n";
-	std::cout << "1 - encode\n";
-	std::cout << "2 - decode\n";
-	std::cout << "q - quit\n";
-	std::cout << "----------------------------------------\n";
-}
-
-void Menu::ShowConvertedText(std::string &action, std::string &text)
-{
-	std::printf("--------------%sd text--------------\n", action.c_str());
-	std::cout << text << std::endl;
-	std::cout << "----------------------------------------\n";
-}
-
 IOType Menu::ChooseIO()
 {
 	IOType chosenIO = IOType::FILE;
 	while (true)
 	{
 		Menu::ShowMenu(&ShowIOMenu, "IO selection");
-		std::cout << "IO type:";
+		std::cout << "IO type: ";
 		std::string choice;
 		std::cin >> choice;
+
+		HandleQuitIfRequested(choice);
 		if (choice == "1")
 		{
 			return IOType::FILE;
@@ -52,44 +54,36 @@ IOType Menu::ChooseIO()
 		{
 			return IOType::CONSOLE;
 		}
+		else
+		{
+			std::cout << "Wrong option selected!\n";
+		}
 	}
 	throw std::invalid_argument("Invalid IO argument");
 }
 
-std::string Menu::ChooseAction()
+ActionType Menu::ChooseAction()
 {
 	while (true)
 	{
-		ShowMenu();
+		Menu::ShowMenu(&ShowActionMenu, "Action selection");
 		std::cout << "Your action: ";
-
 		std::string action;
 		std::cin >> action;
 
+		HandleQuitIfRequested(action);
 		if (action == "1")
 		{
-			return "encode";
+			return ActionType::ENCODE;
 		}
 		else if (action == "2")
 		{
-			return "decode";
-		}
-		else if (action == "q" || action == "Q")
-		{
-			std::cout << "Exiting...\n";
-			std::exit(0);
+			return ActionType::DECODE;
 		}
 		else
 		{
 			std::cout << "Wrong option selected!\n";
 		}
 	}
-}
-
-std::string Menu::EnterText(std::string &action)
-{
-	std::string text;
-	std::printf("Enter text which you'd like to %s:\n", action.c_str());
-	std::getline(std::cin >> std::ws, text);
-	return text;
+	throw std::invalid_argument("Invalid action argument!");
 }

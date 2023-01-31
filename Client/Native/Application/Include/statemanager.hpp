@@ -1,6 +1,8 @@
 #pragma once
 
 #include "types.hpp"
+#include "iomanager.hpp"
+#include "coder.hpp"
 #include <vector>
 
 class StateManager
@@ -8,6 +10,7 @@ class StateManager
 private:
     State currentState;
     std::vector<State> states;
+    IOManager *ioManager;
 
 public:
     StateManager();

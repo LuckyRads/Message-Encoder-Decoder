@@ -9,14 +9,11 @@
 class Menu
 {
 private:
-	static void ShowMenu();
 	static void ShowMenu(void (*displayMenu)(), const std::string menuText);
 
 public:
-	static void ShowConvertedText(std::string &action, std::string &text);
 	static IOType ChooseIO();
-	static std::string ChooseAction();
-	static std::string EnterText(std::string &action);
+	static ActionType ChooseAction();
 };
 
 #endif

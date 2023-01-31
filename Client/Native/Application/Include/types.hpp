@@ -16,6 +16,12 @@ enum class IOType
     CONSOLE = 2
 };
 
+enum class ActionType
+{
+    ENCODE = 1,
+    DECODE = 2
+};
+
 const std::map<unsigned int, std::string> STATE_MAP = {
     {1, "IO_SELECTION"},
     {2, "ACTION_SELECTION"}};
