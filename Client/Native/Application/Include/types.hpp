@@ -37,17 +37,40 @@ enum class ActionType
     DECODE = 2
 };
 
-const std::map<int, std::string> STATE_MAP = {
-    {1, "IO_SELECTION"},
-    {2, "ACTION_SELECTION"}};
+template <typename Enumeration>
+auto as_integer(Enumeration const value) -> typename std::underlying_type<Enumeration>::type;
 
-const std::map<int, std::string> IO_MAP = {
-    {1, "FILE"},
-    {2, "CONSOLE"}};
+const std::map<char, BaseAction> BASE_ACTION_KEY_MAP = {
+    {'b', BaseAction::BACK},
+    {'q', BaseAction::QUIT}};
 
-const std::map<int, std::string> ACTION_MAP = {
-    {1, "ENCODE"},
-    {2, "DECODE"}};
+const std::map<char, State> STATE_ACTION_KEY_MAP = {
+    {'1', State::IO_SELECTION},
+    {'2', State::ACTION_SELECTION}};
+
+const std::map<char, IOType> IO_KEY_MAP = {
+    {'1', IOType::FILE},
+    {'2', IOType::CONSOLE}};
+
+const std::map<char, ActionType> ACTION_KEY_MAP = {
+    {'1', ActionType::ENCODE},
+    {'2', ActionType::DECODE}};
+
+const std::map<BaseAction, std::string> BASE_ACTION_DISPLAY_MAP = {
+    {BaseAction::BACK, "BACK"},
+    {BaseAction::QUIT, "QUIT"}};
+
+const std::map<State, std::string> STATE_DISPLAY_MAP = {
+    {State::IO_SELECTION, "IO SELECTION"},
+    {State::ACTION_SELECTION, "ACTION SELECTION"}};
+
+const std::map<IOType, std::string> IO_DISPLAY_MAP = {
+    {IOType::FILE, "FILE"},
+    {IOType::CONSOLE, "CONSOLE"}};
+
+const std::map<ActionType, std::string> ACTION_DISPLAY_MAP = {
+    {ActionType::ENCODE, "ENCODE"},
+    {ActionType::DECODE, "DECODE"}};
 
 template <typename Enumeration>
 auto as_integer(Enumeration const value) -> typename std::underlying_type<Enumeration>::type
