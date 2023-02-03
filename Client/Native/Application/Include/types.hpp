@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <type_traits>
 
 enum class BaseAction
 {
@@ -43,5 +44,15 @@ const std::map<int, std::string> STATE_MAP = {
 const std::map<int, std::string> IO_MAP = {
     {1, "FILE"},
     {2, "CONSOLE"}};
+
+const std::map<int, std::string> ACTION_MAP = {
+    {1, "ENCODE"},
+    {2, "DECODE"}};
+
+template <typename Enumeration>
+auto as_integer(Enumeration const value) -> typename std::underlying_type<Enumeration>::type
+{
+    return static_cast<typename std::underlying_type<Enumeration>::type>(value);
+}
 
 #endif
