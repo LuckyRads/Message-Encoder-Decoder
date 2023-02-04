@@ -70,7 +70,9 @@
       "fstream": "cpp",
       "sstream": "cpp",
       "stdint.h": "c",
-      "caesarsp.h": "c"
+      "caesarsp.h": "c",
+      "map": "cpp",
+      "xtree": "cpp"
     },
     "java.dependency.packagePresentation": "hierarchical",
     "java.configuration.updateBuildConfiguration": "interactive"
