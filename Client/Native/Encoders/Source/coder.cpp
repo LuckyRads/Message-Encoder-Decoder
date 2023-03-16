@@ -12,10 +12,17 @@ extern "C"
 
 std::string Coder::Encode(const std::string &text)
 {
-    return Base64::Encode(caesarsp_encode(text.c_str(), sizeof(text)));
+    char *pCaesarsEncoded = caesarsp_encode(text.c_str(), text.size());
+    // const std::string encoded = Base64::Encode(pCaesarsEncoded);
+    // free(pCaesarsEncoded);
+    std::string encoded(pCaesarsEncoded);
+    return encoded;
 }
 
 std::string Coder::Decode(const std::string &text)
 {
-    return caesarsp_decode(Base64::Decode(text).c_str(), sizeof(text));
+    // std::string base64Decoded = Base64::Decode(text);
+    // std::string decoded = caesarsp_decode(base64Decoded.c_str(), (text.size() + 1) * sizeof(char));
+    std::string decoded = caesarsp_decode(text.c_str(), text.size());
+    return decoded;
 }

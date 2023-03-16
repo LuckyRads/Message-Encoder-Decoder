@@ -1,14 +1,14 @@
 #include "caesarsp.h"
 #include <stdlib.h>
 
-char *caesarsp_encode(const char *text, const size_t size)
+char *caesarsp_encode(const char *text, const size_t length)
 {
-    char *encodedText = malloc(size);
+    char *encodedText = malloc((length + 1) * sizeof(char));
 
-    for (size_t i = 0; i < size; i++)
+    for (size_t i = 0; i < length; i++)
     {
         char character = text[i];
-        if (text[i] % 2)
+        if (character % 2)
         {
             encodedText[i] = character + 1;
         }
@@ -17,15 +17,16 @@ char *caesarsp_encode(const char *text, const size_t size)
             encodedText[i] = character - 1;
         }
     }
+    encodedText[length] = '\0';
 
     return encodedText;
 }
 
-char *caesarsp_decode(const char *text, const size_t size)
+char *caesarsp_decode(const char *text, const size_t length)
 {
-    char *decodedText = malloc(size);
+    char *decodedText = malloc((length + 1) * sizeof(char));
 
-    for (size_t i = 0; i < size; i++)
+    for (size_t i = 0; i < length; i++)
     {
         char character = text[i];
         if (character % 2)
@@ -37,6 +38,7 @@ char *caesarsp_decode(const char *text, const size_t size)
             decodedText[i] = character - 1;
         }
     }
+    decodedText[length] = '\0';
 
     return decodedText;
 }
