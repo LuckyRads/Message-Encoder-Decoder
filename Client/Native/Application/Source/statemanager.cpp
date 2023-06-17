@@ -2,13 +2,14 @@
 #include "statemanager.hpp"
 #include "menu.hpp"
 #include "consolemanager.hpp"
+#include "filemanager.hpp"
 #include "coder.hpp"
 #include <stdexcept>
 
 IOManager *GetNewIOManager(IOType ioType)
 {
     if (ioType == IOType::FILE)
-        return (IOManager *)nullptr;
+        return new FileManager("file.txt", "XMLSymbol");
     else if (ioType == IOType::CONSOLE)
         return new ConsoleManager();
     else
