@@ -1,3 +1,4 @@
 .vs
 .git
-Build/**
+**/Build/**
+**/build/**
