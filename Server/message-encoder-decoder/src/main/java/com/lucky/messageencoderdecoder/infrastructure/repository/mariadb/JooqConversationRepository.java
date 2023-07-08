@@ -1,5 +1,8 @@
 package com.lucky.messageencoderdecoder.infrastructure.repository.mariadb;
 
+import static com.lucky.messageencoderdecoder.generated.jooq.tables.Conversations.CONVERSATION;
+
+import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
 import com.lucky.messageencoderdecoder.domain.model.conversation.Conversation;
@@ -12,9 +15,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JooqConversationRepository implements ConversationRepository {
 
+    private final DSLContext dslContext;
+
     @Override
     public Conversation getConversation(ConversationId id) {
-        // TODO Auto-generated method stub
         return null;
     }
 

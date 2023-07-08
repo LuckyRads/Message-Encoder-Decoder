@@ -129,7 +129,7 @@ jooq {
                     }
                     target {
                         packageName = 'com.lucky.messageencoderdecoder.generated.jooq'
-                        directory = 'src/main/generated/jooq'
+                        directory = 'src/main/generated/java'
                     }
                     strategy.name = 'org.jooq.codegen.DefaultGeneratorStrategy'
                 }
