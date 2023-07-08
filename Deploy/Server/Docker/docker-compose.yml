@@ -1,0 +1,12 @@
+version: "3.8"
+name: messageencoderdecoder
+
+services:
+  database:
+    env_file:
+      - .env
+    image: lucky/message-encoder-decoder/mariadb:${IMAGE_TAG}
+    build:
+      context: ./../../../Builds/Docker/database/mariadb
+    ports:
+      - "${DATABASE_PORT}:3306"
