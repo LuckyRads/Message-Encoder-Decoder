@@ -1,6 +1,16 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.flywaydb:flyway-mysql:9.20.0'
+    }
+}
+
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.0'
+	id 'org.springframework.boot' version '3.1.1'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'org.asciidoctor.convert' version '1.5.8'
 	id 'nu.studer.jooq' version '8.2'
@@ -40,7 +50,7 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     // MariaDB
-	compileOnly 'org.mariadb.jdbc:mariadb-java-client'
+	implementation 'org.mariadb.jdbc:mariadb-java-client'
     
     // Lombok
 	compileOnly 'org.projectlombok:lombok'    
@@ -70,7 +80,6 @@ tasks.named('asciidoctor') {
 
 flyway {
     configurations = ['flywayMigration']
-    driver = 'org.mariadb.jdbc.Driver'
     url = 'jdbc:mariadb://localhost:3308/message-encoder-decoder'
     user = 'root'
     password = 'root'   
