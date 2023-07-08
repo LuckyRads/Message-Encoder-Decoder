@@ -56,7 +56,6 @@ jooq {
             generateSchemaSourceOnCompilation = true  // default (can be omitted)
 
             generationTool {
-                logging = Logging.WARN
                 jdbc {
                     driver = 'org.mariadb.jdbc.Driver'
                     url = 'jdbc:mariadb://localhost:3306/message-encoder-decoder'
@@ -72,7 +71,7 @@ jooq {
                 generator {
                     name = 'org.jooq.codegen.DefaultGenerator'
                     database {
-                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+                        name = 'org.jooq.meta.mariadb.MariaDBDatabase'
                         inputSchema = 'public'
                         forcedTypes {
                             forcedType {
@@ -94,8 +93,8 @@ jooq {
                         fluentSetters = true
                     }
                     target {
-                        packageName = 'nu.studer.sample'
-                        directory = 'build/generated-src/jooq/main'  // default (can be omitted)
+                        packageName = 'com.lucky.messageencoderdecoder.jooq'
+                        directory = 'src/main/generated/jooq'
                     }
                     strategy.name = 'org.jooq.codegen.DefaultGeneratorStrategy'
                 }
