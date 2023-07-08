@@ -4,16 +4,20 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'org.asciidoctor.convert' version '1.5.8'
 	id 'nu.studer.jooq' version '8.2'
+    id 'org.flywaydb.flyway' version '9.20.0'
 }
 
 group = 'com.lucky'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+def flywayVersion = '9.20.0'
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+    flywayMigration
 }
 
 repositories {
@@ -25,16 +29,30 @@ ext {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    // Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-jooq'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	jooqGenerator 'org.mariadb.jdbc:mariadb-java-client'
-	compileOnly 'org.projectlombok:lombok'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // MariaDB
+	compileOnly 'org.mariadb.jdbc:mariadb-java-client'
+    
+    // Lombok
+	compileOnly 'org.projectlombok:lombok'    
 	annotationProcessor 'org.projectlombok:lombok'
+
+    // Flyway
+	flywayMigration 'org.mariadb.jdbc:mariadb-java-client'
+
+    // Jooq
+	jooqGenerator 'org.mariadb.jdbc:mariadb-java-client'
+
+    // Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'org.springframework.security:spring-security-test'
@@ -48,6 +66,14 @@ tasks.named('test') {
 tasks.named('asciidoctor') {
 	inputs.dir snippetsDir
 	dependsOn test
+}
+
+flyway {
+    configurations = ['flywayMigration']
+    driver = 'org.mariadb.jdbc.Driver'
+    url = 'jdbc:mariadb://localhost:3308/message-encoder-decoder'
+    user = 'root'
+    password = 'root'   
 }
 
 jooq {
@@ -93,7 +119,7 @@ jooq {
                         fluentSetters = true
                     }
                     target {
-                        packageName = 'com.lucky.messageencoderdecoder.jooq'
+                        packageName = 'com.lucky.messageencoderdecoder.generated.jooq'
                         directory = 'src/main/generated/jooq'
                     }
                     strategy.name = 'org.jooq.codegen.DefaultGeneratorStrategy'
@@ -101,4 +127,21 @@ jooq {
             }
         }
     }
+}
+
+// configure jOOQ task such that it only executes when something has changed that potentially affects the generated JOOQ sources
+// - the jOOQ configuration has changed (Jdbc, Generator, Strategy, etc.)
+// - the classpath used to execute the jOOQ generation tool has changed (jOOQ library, database driver, strategy classes, etc.)
+// - the schema files from which the schema is generated and which is used by jOOQ to generate the sources have changed (scripts added, modified, etc.)
+tasks.named('generateJooq').configure {
+    // ensure database schema has been prepared by Flyway before generating the jOOQ sources
+    dependsOn tasks.named('flywayMigrate')
+
+    // declare Flyway migration scripts as inputs on the jOOQ task
+    inputs.files(fileTree('src/main/resources/db/migration'))
+        .withPropertyName('migrations')
+        .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // make jOOQ task participate in incremental builds (and build caching)
+    allInputsDeclared = true
 }
