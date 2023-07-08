@@ -1,6 +1,6 @@
 package com.lucky.messageencoderdecoder.infrastructure.repository.mariadb;
 
-import static com.lucky.messageencoderdecoder.generated.jooq.tables.Conversations.CONVERSATION;
+import static com.lucky.messageencoderdecoder.generated.jooq.tables.Conversations.CONVERSATIONS;
 
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
