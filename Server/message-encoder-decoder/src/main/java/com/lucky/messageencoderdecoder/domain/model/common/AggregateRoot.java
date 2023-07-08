@@ -2,14 +2,13 @@ package com.lucky.messageencoderdecoder.domain.model.common;
 
 import java.io.Serializable;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.EqualsAndHashCode;
 
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AggregateRoot<T extends Serializable> implements Entity<T> {
+@EqualsAndHashCode(callSuper = true)
+public abstract class AggregateRoot<T extends Serializable> extends Entity<T> {
 
-    @Getter()
-    private final T id;
+    protected AggregateRoot(T id) {
+        super(id);
+    }
 
 }

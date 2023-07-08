@@ -5,17 +5,25 @@ import java.util.UUID;
 
 import com.lucky.messageencoderdecoder.domain.model.common.Entity;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.EqualsAndHashCode;
 
-@RequiredArgsConstructor
-public class ConversationId implements Entity<UUID>, Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class ConversationId extends Entity<UUID> implements Serializable {
 
-    @Getter
-    private final UUID id;
+    private ConversationId() {
+        super(UUID.randomUUID());
+    }
+
+    public ConversationId(UUID id) {
+        super(id);
+    }
+
+    public ConversationId(String id) {
+        super(UUID.fromString(id));
+    }
 
     public static ConversationId generate() {
-        return new ConversationId(UUID.randomUUID());
+        return new ConversationId();
     }
 
 }
