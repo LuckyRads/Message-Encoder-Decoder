@@ -16,7 +16,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS conversations (
-        id VARCHAR(45) NOT NULL PRIMARY KEY,
+        id VARCHAR(45) NOT NULL,
         user_id VARCHAR(45) NOT NULL,
         message_id VARCHAR(45) NOT NULL,
         PRIMARY KEY(id),
