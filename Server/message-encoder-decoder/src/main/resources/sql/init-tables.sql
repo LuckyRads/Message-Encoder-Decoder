@@ -1,13 +1,11 @@
-DROP TABLE IF EXISTS messages, users, chats;
-
 CREATE TABLE
-    messages (
+    IF NOT EXISTS messages (
         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
         message VARCHAR(255) NOT NULL
     );
 
 CREATE TABLE
-    users (
+    IF NOT EXISTS users (
         id INT NOT NULL AUTO_INCREMENT,
         email VARCHAR(255) NOT NULL,
         username VARCHAR(255) NOT NULL,
@@ -16,7 +14,7 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    chats (
+    IF NOT EXISTS chats (
         id INT NOT NULL AUTO_INCREMENT,
         user_id INT NOT NULL,
         message_id INT NOT NULL,
