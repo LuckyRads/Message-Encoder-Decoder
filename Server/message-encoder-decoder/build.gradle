@@ -72,7 +72,7 @@ jooq {
                     name = 'org.jooq.codegen.DefaultGenerator'
                     database {
                         name = 'org.jooq.meta.mariadb.MariaDBDatabase'
-                        inputSchema = 'public'
+                        inputSchema = 'message-encoder-decoder'
                         forcedTypes {
                             forcedType {
                                 name = 'varchar'
