@@ -1,5 +1,5 @@
 #!/bin/bash -e
 
-source "$(dirname $0)/../common.sh"
+source "$(dirname $(realpath "${BASH_SOURCE[0]}"))/../../../common.sh"
 
 IMAGE_NAME="mariadb"

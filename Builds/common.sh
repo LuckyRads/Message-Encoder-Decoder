@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-source "$(dirname $0)/../Tools/Scripts/lib.sh"
+source "$(dirname $(realpath "${BASH_SOURCE[0]}"))/../Tools/Scripts/lib.sh"
 
 # Leaving empty string for the default repo.
 DOCKER_REPO=""
