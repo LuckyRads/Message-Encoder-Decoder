@@ -1,14 +1,26 @@
 {
   "folders": [
-	{
-		"name": "Native client",
-		"path": "Client/Native"
-	},
-	{
-		"name": "Server",
-		"path": "Server/message-encoder-decoder"
-	}
-],
+    {
+      "name": "Builds",
+      "path": "Builds"
+    },
+    {
+      "name": "Tools",
+      "path": "Tools"
+    },
+    {
+      "name": "Deploy",
+      "path": "Deploy"
+    },
+    {
+      "name": "Native client",
+      "path": "Client/Native"
+    },
+    {
+      "name": "Server",
+      "path": "Server/message-encoder-decoder"
+    }
+  ],
   "settings": {
     "files.associations": {
       "iostream": "cpp",
@@ -75,6 +87,10 @@
       "xtree": "cpp"
     },
     "java.dependency.packagePresentation": "hierarchical",
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "cSpell.words": [
+      "OPENAPI"
+    ]
   }
 }

@@ -1,18 +1,42 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.flywaydb:flyway-mysql:9.20.0'
+    }
+}
+
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.0'
+	id 'org.springframework.boot' version '3.1.1'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'org.asciidoctor.convert' version '1.5.8'
+	id 'nu.studer.jooq' version '8.2'
+    id 'org.flywaydb.flyway' version '9.20.0'
+    id 'org.springdoc.openapi-gradle-plugin' version '1.6.0'
 }
 
 group = 'com.lucky'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+def flywayVersion = '9.20.0'
+def openapiVersion = '1.7.0'
+def springDocVersion = '2.1.0'
+
+def dbUrl = 'jdbc:mariadb://localhost:3308/message-encoder-decoder'
+def dbUser = 'root'
+def dbPassword = 'root'
+
+def openApiSpecUrl = 'http://localhost:10100/api-docs'
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+    flywayMigration
 }
 
 repositories {
@@ -24,18 +48,129 @@ ext {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    // Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-jooq'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // MariaDB
+	implementation 'org.mariadb.jdbc:mariadb-java-client'
+    
+    // Lombok
+	compileOnly 'org.projectlombok:lombok'    
 	annotationProcessor 'org.projectlombok:lombok'
+
+    // Flyway
+	flywayMigration 'org.mariadb.jdbc:mariadb-java-client'
+
+    // Jooq
+	jooqGenerator 'org.mariadb.jdbc:mariadb-java-client'
+
+    // OpenAPI
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:$springDocVersion"
+
+    // Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'org.springframework.security:spring-security-test'
+}
+
+flyway {
+    configurations = ['flywayMigration']
+    url = "$dbUrl"
+    user = "$dbUser"
+    password = "$dbPassword"   
+}
+
+jooq {
+    configurations {
+        main {  // name of the jOOQ configuration
+            generateSchemaSourceOnCompilation = true  // default (can be omitted)
+
+            generationTool {
+                jdbc {
+                    driver = 'org.mariadb.jdbc.Driver'
+                    url = "$dbUrl"
+                    user = "$dbUser"
+                    password = "$dbPassword"
+                    properties {
+                        property {
+                            key = 'ssl'
+                            value = 'false'
+                        }
+                    }
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.mariadb.MariaDBDatabase'
+                        inputSchema = 'message-encoder-decoder'
+                        forcedTypes {
+                            forcedType {
+                                name = 'varchar'
+                                includeExpression = '.*'
+                                includeTypes = 'JSONB?'
+                            }
+                            forcedType {
+                                name = 'varchar'
+                                includeExpression = '.*'
+                                includeTypes = 'INET'
+                            }
+                        }
+                    }
+                    generate {
+                        deprecated = false
+                        records = true
+                        immutablePojos = true
+                        fluentSetters = true
+                    }
+                    target {
+                        packageName = 'com.lucky.messageencoderdecoder.generated.jooq'
+                        directory = 'src/main/generated/java'
+                    }
+                    strategy.name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+                }
+            }
+        }
+    }
+}
+
+openApi {
+    getApiDocsUrl().set("$openApiSpecUrl")
+    outputDir.set(file("openapi"))
+    outputFileName.set("OpenAPI-MessageEncoderDecoder.json")
+    waitTimeInSeconds.set(180)
+    customBootRun {
+        args.set(["--spring.profiles.active=openapi"]) 
+    }
+}
+
+// configure jOOQ task such that it only executes when something has changed that potentially affects the generated JOOQ sources
+// - the jOOQ configuration has changed (Jdbc, Generator, Strategy, etc.)
+// - the classpath used to execute the jOOQ generation tool has changed (jOOQ library, database driver, strategy classes, etc.)
+// - the schema files from which the schema is generated and which is used by jOOQ to generate the sources have changed (scripts added, modified, etc.)
+tasks.named('generateJooq').configure {
+    // ensure database schema has been prepared by Flyway before generating the jOOQ sources
+    dependsOn tasks.named('flywayMigrate')
+
+    // declare Flyway migration scripts as inputs on the jOOQ task
+    inputs.files(fileTree('src/main/resources/db/migration'))
+        .withPropertyName('migrations')
+        .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // make jOOQ task participate in incremental builds (and build caching)
+    allInputsDeclared = true
+}
+
+// Needed for OpenAPI generation to work with Gradle 8+
+tasks.named("jar") {
+    mustRunAfter("forkedSpringBootRun", "generateOpenApiDocs")
 }
 
 tasks.named('test') {
@@ -46,32 +181,4 @@ tasks.named('test') {
 tasks.named('asciidoctor') {
 	inputs.dir snippetsDir
 	dependsOn test
-}
-
-jooqGenerator {
-	jooqVersion = "3.13.1"
-	configuration("primary", project.sourceSets.getByName("main")) {
-		databaseSources = migrationDirs
-
-		configuration = jooqCodegenConfiguration {
-			jdbc {
-				username = "root"
-				password = "root"
-				driver = "org.mariadb.jdbc.Driver"
-				url = "jdbc:mariadb://localhost:3306/message-encoder-decoder"
-			}
-
-			generator {
-				target {
-					packageName = "org.lucky.messageencoderdecoder.jooq"
-					directory = "${project.buildDir}/generated/jooq/primary"
-				}
-			}
-
-			database {
-				name = "org.jooq.meta.mariadb.MariaDBDatabase"
-				inputSchema = "PUBLIC"
-			}
-		}
-	}
 }
