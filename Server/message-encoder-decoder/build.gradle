@@ -24,10 +24,13 @@ sourceCompatibility = '17'
 
 def flywayVersion = '9.20.0'
 def openapiVersion = '1.7.0'
+def springDocVersion = '2.1.0'
 
 def dbUrl = 'jdbc:mariadb://localhost:3308/message-encoder-decoder'
 def dbUser = 'root'
 def dbPassword = 'root'
+
+def openApiSpecUrl = 'http://localhost:10100/api-docs'
 
 configurations {
 	compileOnly {
@@ -69,7 +72,8 @@ dependencies {
 	jooqGenerator 'org.mariadb.jdbc:mariadb-java-client'
 
     // OpenAPI
-    implementation "org.springdoc:springdoc-openapi-ui:$openapiVersion"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocVersion"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:$springDocVersion"
 
     // Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -138,7 +142,7 @@ jooq {
 }
 
 openApi {
-    getApiDocsUrl().set('http://localhost:8080/api/v1/api-docs')
+    getApiDocsUrl().set("$openApiSpecUrl")
     outputDir.set(file("openapi"))
     outputFileName.set("OpenAPI-MessageEncoderDecoder.json")
     waitTimeInSeconds.set(180)
