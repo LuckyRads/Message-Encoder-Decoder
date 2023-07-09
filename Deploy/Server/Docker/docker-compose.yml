@@ -10,3 +10,14 @@ services:
       context: ./../../../Builds/Docker/database/mariadb
     ports:
       - "${DATABASE_PORT}:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  db-data:
