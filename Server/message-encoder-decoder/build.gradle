@@ -15,6 +15,7 @@ plugins {
 	id 'org.asciidoctor.convert' version '1.5.8'
 	id 'nu.studer.jooq' version '8.2'
     id 'org.flywaydb.flyway' version '9.20.0'
+    id 'org.springdoc.openapi-gradle-plugin' version '1.6.0'
 }
 
 group = 'com.lucky'
@@ -68,15 +69,6 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
-tasks.named('test') {
-	outputs.dir snippetsDir
-	useJUnitPlatform()
-}
-
-tasks.named('asciidoctor') {
-	inputs.dir snippetsDir
-	dependsOn test
-}
 
 flyway {
     configurations = ['flywayMigration']
@@ -138,6 +130,16 @@ jooq {
     }
 }
 
+openApi {
+    getApiDocsUrl().set('http://localhost:8080/api/v1/v3/api-docs')
+    outputDir.set(file("$buildDir/openapi"))
+    outputFileName.set("MessageEncoderDecoder.json")
+    waitTimeInSeconds.set(10)
+    customBootRun {
+        args.set(["--spring.profiles.active=openapi"]) 
+    }
+}
+
 // configure jOOQ task such that it only executes when something has changed that potentially affects the generated JOOQ sources
 // - the jOOQ configuration has changed (Jdbc, Generator, Strategy, etc.)
 // - the classpath used to execute the jOOQ generation tool has changed (jOOQ library, database driver, strategy classes, etc.)
@@ -153,4 +155,19 @@ tasks.named('generateJooq').configure {
 
     // make jOOQ task participate in incremental builds (and build caching)
     allInputsDeclared = true
+}
+
+// Needed for OpenAPI generation to work with Gradle 8+
+tasks.named("jar") {
+    mustRunAfter("forkedSpringBootRun", "generateOpenApiDocs")
+}
+
+tasks.named('test') {
+	outputs.dir snippetsDir
+	useJUnitPlatform()
+}
+
+tasks.named('asciidoctor') {
+	inputs.dir snippetsDir
+	dependsOn test
 }
