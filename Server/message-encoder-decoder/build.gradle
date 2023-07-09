@@ -25,6 +25,10 @@ sourceCompatibility = '17'
 def flywayVersion = '9.20.0'
 def openapiVersion = '1.7.0'
 
+def dbUrl = 'jdbc:mariadb://localhost:3308/message-encoder-decoder'
+def dbUser = 'root'
+def dbPassword = 'root'
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -75,9 +79,9 @@ dependencies {
 
 flyway {
     configurations = ['flywayMigration']
-    url = 'jdbc:mariadb://localhost:3308/message-encoder-decoder'
-    user = 'root'
-    password = 'root'   
+    url = "$dbUrl"
+    user = "$dbUser"
+    password = "$dbPassword"   
 }
 
 jooq {
@@ -88,9 +92,9 @@ jooq {
             generationTool {
                 jdbc {
                     driver = 'org.mariadb.jdbc.Driver'
-                    url = 'jdbc:mariadb://localhost:3308/message-encoder-decoder'
-                    user = 'root'
-                    password = 'root'
+                    url = "$dbUrl"
+                    user = "$dbUser"
+                    password = "$dbPassword"
                     properties {
                         property {
                             key = 'ssl'
