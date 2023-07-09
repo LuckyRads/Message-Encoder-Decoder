@@ -4,13 +4,12 @@ import Conversation from "./pages/Conversations/Conversation";
 
 function App() {
     return (
-        <>
+        <div className="App">
             <Routes>
                 {/* <Route path="/" element={<Home />} /> */}
-                <Route path="/conversations" element={Conversation}></Route>
+                <Route path="/conversations" element={<Conversation />}></Route>
             </Routes>
-            <div className="App">Client is up.</div>
-        </>
+        </div>
     );
 }
 
