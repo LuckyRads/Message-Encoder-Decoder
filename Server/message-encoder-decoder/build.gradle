@@ -23,6 +23,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 def flywayVersion = '9.20.0'
+def openapiVersion = '1.7.0'
 
 configurations {
 	compileOnly {
@@ -63,12 +64,14 @@ dependencies {
     // Jooq
 	jooqGenerator 'org.mariadb.jdbc:mariadb-java-client'
 
+    // OpenAPI
+    implementation "org.springdoc:springdoc-openapi-ui:$openapiVersion"
+
     // Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
-
 
 flyway {
     configurations = ['flywayMigration']
@@ -131,10 +134,10 @@ jooq {
 }
 
 openApi {
-    getApiDocsUrl().set('http://localhost:8080/api/v1/v3/api-docs')
-    outputDir.set(file("$buildDir/openapi"))
-    outputFileName.set("MessageEncoderDecoder.json")
-    waitTimeInSeconds.set(10)
+    getApiDocsUrl().set('http://localhost:8080/api/v1/api-docs')
+    outputDir.set(file("openapi"))
+    outputFileName.set("OpenAPI-MessageEncoderDecoder.json")
+    waitTimeInSeconds.set(180)
     customBootRun {
         args.set(["--spring.profiles.active=openapi"]) 
     }
